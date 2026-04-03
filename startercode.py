@@ -211,7 +211,7 @@ def get_groups_above_cutoff(cutoff, cache_file):
                 filtered_groups[gid] = count
         return filtered_groups
     
-    #finished
+    #finished 
 
 
 # Extra Credit
@@ -235,7 +235,43 @@ def recommend_breeds_in_same_group(breed_name, cache_file):
             "No group information available for '{breed_name}'."  (no group id)
             "No recommendations found based on '{breed_name}'."  (no other breeds in that group)
     """
+    cache = load_json(cache_file)
+    if not cache:
+        return "No breed data found in cache."
+    
+    target_group_id = None
+    found_breed_entry = None 
 
+    for url, content in cache.items():
+        current_name = content['data']['attributes']['name']
+        if current_name.lower() == breed_name.lower():
+            found_breed_entry = content
+            break
+    if not found_breed_entry:
+        return f"'{breed_name}' is not in the cache."
+    try:
+        target_group_id = found_breed_entry['data']['relationships']['group']['data']['id']
+    except(KeyError, TypeError):
+        pass
+    if not target_group_id:
+        return f"No group information available for '{breed_name}'."
+    recommendations = []
+    for url, content in cache.items():
+        try:
+            other_name = content['data']['attributes']['name']
+            other_group_id = content['data']['relationships']['group']['data']['id']
+            if other_group_id == target_group_id and other_name.lower() != breed_name.lower():
+                recommendations.append(other_name)
+        except(KeyError, TypeError):
+            continue
+
+    if not recommendations:
+        return f"No recommendations found based on '{breed_name}'."
+
+    recommendations.sort()
+    return recommendations
+
+#finsihed extra credit
 
 class TestHomeworkDogAPI(unittest.TestCase):
     def setUp(self):
