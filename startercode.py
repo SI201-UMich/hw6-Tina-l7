@@ -36,8 +36,14 @@ def load_json(filename):
         A dictionary with the JSON data, OR an empty dictionary {} if the file
         cannot be opened or is not valid JSON.
     """
-    pass
-
+    if not os.path.exists(filename):
+        return {}
+    try:
+        with open(filename, "r", encoding='utf-8') as f:
+            return json.load(f)
+    except:
+        return {}
+#finsished
 
 def create_cache(dictionary, filename):
     """
