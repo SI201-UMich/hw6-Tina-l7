@@ -1,8 +1,8 @@
 # SI 201 HW6 (APIs, JSON, and Caching)
-# Your name:
-# Your student id:
-# Your email:
-# Who or what you worked with on this homework (including generative AI like ChatGPT):
+# Your name: Tina Le 
+# Your student id: 60151184
+# Your email: letina@umich.edu
+# Who or what you worked with on this homework (including generative AI like ChatGPT): I worked with a friend that took this course to ask for help on parts that i didn't get. I also used ChatGPT to help me understand the JSON structure and debug some of my code an explaining some of the errors I got.
 # If you worked with generative AI also add a statement for how you used it.
 # e.g.:
 # Asked ChatGPT for help debugging and understanding the JSON structure
@@ -85,6 +85,9 @@ def search_breed(breed_id):
 
             if parsed_json_dict.get("data") is not None:
                 return (parsed_json_dict, url)
+    except:
+        pass
+    return None
             
         
 
@@ -123,7 +126,7 @@ def update_cache(breed_ids, cache_file):
     return f"Cached data for {percentage}% of breeds"
 
 #finsished
-
+#
         
 
 
@@ -205,13 +208,14 @@ def get_groups_above_cutoff(cutoff, cache_file):
         except(KeyError, TypeError):
             continue
 
-        filtered_groups = {}
-        for gid, count in group_counts.items():
-            if count >= cutoff:
+    filtered_groups = {}
+    for gid, count in group_counts.items():
+        if count >= cutoff:
                 filtered_groups[gid] = count
-        return filtered_groups
+    return filtered_groups
     
-    #finished 
+    #finished
+    # finished with everything 
 
 
 # Extra Credit
